@@ -7,6 +7,10 @@ import LayoutBazar from "../Layouts/LayoutBazar";
 import Home from '../Pages/Home/Home';
 // Páginas públicas
 
+// Rotas públicas 
+import Carrinho from "../Pages/Carrinho/Carrinho";
+
+
 import NotFound from "../Pages/NotFound/NotFound";
 const AppRoutes = () => {
   return (
@@ -18,6 +22,7 @@ const AppRoutes = () => {
       </Route>
 
       {/* Rotas públicas sem LayoutBase */}
+       <Route path="/carrinho" element={<Carrinho />} />
    
 
       {/* Rotas protegidas/Admin 

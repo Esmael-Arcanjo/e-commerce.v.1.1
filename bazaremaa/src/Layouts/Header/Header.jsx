@@ -1,16 +1,20 @@
 // src/components/Header.jsx
 import React from "react";
+import { Link } from "react-router-dom"; // ⬅️ Importa o Link para rotas
 
 const Header = () => {
   return (
     <header className="bg-indigo-700 shadow-lg p-4 sticky top-0 z-50">
       <div className="container mx-auto flex justify-between items-center">
-        <h1 className="text-3xl font-bold text-white">Bazar-emaa</h1>
+        {/* Logo */}
+        <Link to="/" className="text-3xl font-bold text-white">
+          Bazar-emaa
+        </Link>
 
         <nav className="flex items-center space-x-6 text-white font-semibold">
           {/* Botão Entrar */}
-          <a
-            href="#"
+          <Link
+            to="/login"
             className="flex items-center space-x-2 p-2 rounded-lg hover:bg-indigo-600 transition-colors text-base"
           >
             <svg
@@ -28,11 +32,11 @@ const Header = () => {
               ></path>
             </svg>
             <span>Entrar</span>
-          </a>
+          </Link>
 
           {/* Botão Anúncios */}
-          <a
-            href="#"
+          <Link
+            to="/anuncios"
             className="flex items-center space-x-2 p-2 rounded-lg hover:bg-indigo-600 transition-colors text-base"
           >
             <svg
@@ -50,12 +54,13 @@ const Header = () => {
               ></path>
             </svg>
             <span>Anúncios</span>
-          </a>
+          </Link>
 
           {/* Botão Carrinho */}
           <div className="relative">
-            <button
-              id="cart-button"
+            <Link
+              to="/carrinho"
+               onClick={toggleCart} // 👈 aqu
               className="relative flex items-center space-x-2 bg-emerald-500 text-white px-4 py-2 rounded-lg font-bold hover:bg-emerald-600 transition-colors text-lg"
             >
               <svg
@@ -79,7 +84,7 @@ const Header = () => {
               >
                 0
               </span>
-            </button>
+            </Link>
           </div>
         </nav>
       </div>

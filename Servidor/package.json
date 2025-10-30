@@ -1,0 +1,16 @@
+{
+  "name": "servidor",
+  "version": "1.0.0",
+  "description": "1. Node.js e Isso cria o package.json padrão. ambiente principal--npm init -y\r 2. Instalar o Express (framework HTTP) npm install express\r 3. MySQL  → banco de dados relacional\r 4. Sequelize  para facilitar consultas\r 5. bcrypt → criptografia de senhas\r 6. jsonwebtoken (JWT) → autenticação por token\r 7. cors → permitir requisições do frontend\r 8. dotenv → variáveis de ambiente\r 9. multer → upload de imagens (produtos, perfil)\r 10. nodemailer → envio de e-mails (recuperação de senha, notificações)\r 11. express-validator → validação de dados\r 12. morgan → logs de requisições (opcional para dev)\r 13. nodemon → reinício automático durante dev",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "mysql2": "^3.15.3"
+  }
+}

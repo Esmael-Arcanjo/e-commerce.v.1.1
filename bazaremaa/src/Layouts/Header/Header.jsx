@@ -36,7 +36,7 @@ const Header = () => {
 
           {/* Botão Anúncios */}
           <Link
-            to="/anuncios"
+            to="/admin"
             className="flex items-center space-x-2 p-2 rounded-lg hover:bg-indigo-600 transition-colors text-base"
           >
             <svg
@@ -53,14 +53,13 @@ const Header = () => {
                 d="M9 17v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm2-12h2a2 2 0 012 2v6a2 2 0 01-2 2h-2a2 2 0 01-2-2V7a2 2 0 012-2zm6 0h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V7a2 2 0 012-2z"
               ></path>
             </svg>
-            <span>Anúncios</span>
+            <span>Dashboard</span>
           </Link>
 
           {/* Botão Carrinho */}
           <div className="relative">
             <Link
               to="/carrinho"
-               onClick={toggleCart} // 👈 aqu
               className="relative flex items-center space-x-2 bg-emerald-500 text-white px-4 py-2 rounded-lg font-bold hover:bg-emerald-600 transition-colors text-lg"
             >
               <svg

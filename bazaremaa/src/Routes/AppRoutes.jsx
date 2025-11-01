@@ -1,36 +1,33 @@
-import React from 'react'
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-
-// Layouts
+// Layout principal do site
 import LayoutBazar from "../Layouts/LayoutBazar";
-import Home from '../Pages/Home/Home';
+
 // Páginas públicas
-
-// Rotas públicas 
+import Home from "../Pages/Home/Home";
 import Carrinho from "../Pages/Carrinho/Carrinho";
-
-
 import NotFound from "../Pages/NotFound/NotFound";
+
+// Painel administrativo (rotas internas)
+import AdminRoutes from "./AdminRoutes";
+
 const AppRoutes = () => {
   return (
     <Routes>
-      {/* Rotas públicas com LayoutBase */}
+      {/* ROTAS PÚBLICAS COM O LAYOUT DO SITE */}
       <Route element={<LayoutBazar />}>
         <Route path="/" element={<Home />} />
-        {/* Adicione outras páginas públicas que usem LayoutBase aqui */}
+        <Route path="/carrinho" element={<Carrinho />} />
       </Route>
 
-      {/* Rotas públicas sem LayoutBase */}
-       <Route path="/carrinho" element={<Carrinho />} />
-   
+      {/* ROTAS ADMIN (SEM LAYOUT PÚBLICO) */}
+      <Route path="/admin/*" element={<AdminRoutes />} />
 
-      {/* Rotas protegidas/Admin 
-   
-        */}
+      {/* PÁGINA 404 */}
       <Route path="*" element={<NotFound />} />
     </Routes>
-  )
-}
+  );
+};
 
-export default AppRoutes
+export default AppRoutes;

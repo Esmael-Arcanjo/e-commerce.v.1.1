@@ -1,4 +1,3 @@
-// src/components/Layout/Layout.jsx
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Header from "./Header";
@@ -8,29 +7,29 @@ const Layout = () => {
   const [menuOpen, setMenuOpen] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
 
+  // Estado compartilhado do perfil
+  const [profile, setProfile] = useState({
+    nome: "John Doe",
+    foto: "https://i.pravatar.cc/80",
+    cargo: "Administrador",
+    email: "grupoemaa@gmail.com",
+  });
+
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   return (
     <div className={darkMode ? "dark bg-gray-900 min-h-screen" : "bg-gray-50 min-h-screen"}>
-      
-      {/* Header com controle de menu e dark mode */}
-      <Header toggleMenu={toggleMenu} darkMode={darkMode} setDarkMode={setDarkMode} />
-
+      <Header
+        toggleMenu={toggleMenu}
+        darkMode={darkMode}
+        setDarkMode={setDarkMode}
+        profile={profile}
+      />
       <div className="flex pt-16">
-        
-        {/* Sidebar com estado de abertura */}
-        <Sidebar isOpen={menuOpen} />
-
-        {/* Área de conteúdo */}
-        <main
-          className={`transition-all duration-300 flex-1 ${
-            menuOpen ? "ml-64" : "ml-20"
-          } p-6`}
-        >
-          {/* Aqui as rotas filhas serão renderizadas */}
-          <Outlet />
+        <Sidebar isOpen={menuOpen} profile={profile} />
+        <main className={`transition-all duration-300 flex-1 ${menuOpen ? "ml-64" : "ml-20"} p-6`}>
+          <Outlet context={{ profile, setProfile }} /> {/* passa via Outlet */}
         </main>
-
       </div>
     </div>
   );

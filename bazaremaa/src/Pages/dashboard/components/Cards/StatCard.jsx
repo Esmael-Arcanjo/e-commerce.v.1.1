@@ -1,24 +1,20 @@
-// src/components/Cards/StatCard.jsx
-import React from 'react';
+import React from "react";
+
+const colorMap = {
+  green: "text-green-500 bg-green-100",
+  orange: "text-orange-500 bg-orange-100",
+  red: "text-red-500 bg-red-100",
+  "light-green": "text-emerald-500 bg-emerald-100",
+};
 
 const StatCard = ({ title, value, icon, color }) => {
-  // Usar cores para o estilo do ícone (simulação)
-  const iconStyle = {
-    backgroundColor: color === 'green' ? '#10B981' : 
-                     color === 'orange' ? '#F97316' : 
-                     color === 'red' ? '#EF4444' : 
-                     '#34D399',
-    color: 'white',
-    // ... outros estilos de ícone
-  };
-
   return (
-    <div className="stat-card bg-white p-5 rounded-lg shadow flex justify-between items-center">
+    <div className="bg-white p-5 rounded-xl shadow-sm border flex justify-between items-center">
       <div>
-        <h3 className="text-sm font-medium text-gray-500">{title}</h3>
-        <p className="text-2xl font-bold text-gray-800">{value}</p>
+        <p className="text-gray-500 text-sm">{title}</p>
+        <h2 className="text-2xl font-semibold text-gray-800 mt-1">{value}</h2>
       </div>
-      <div style={iconStyle} className="icon-badge p-3 rounded-full text-lg">
+      <div className={`text-3xl p-3 rounded-full ${colorMap[color]}`}>
         {icon}
       </div>
     </div>

@@ -1,149 +1,98 @@
 import React, { useState } from "react";
+import { FaTachometerAlt, FaChartLine, FaShoppingCart, FaLayerGroup, FaCube, FaFileAlt, FaUserFriends, FaSignOutAlt, FaChevronDown } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import {
-  FaTachometerAlt,
-  FaChartLine,
-  FaLayerGroup,
-  FaCube,
-  FaUserFriends,
-  FaSignOutAlt,
-  FaBoxOpen,
-  FaChevronDown,
-  FaChevronUp,
-} from "react-icons/fa";
 
-const sections = [
-  {
-    title: null,
-    items: [
-      { name: "Dashboard", icon: FaTachometerAlt },
-      { name: "Analytics", icon: FaChartLine },
-     
-    ],
-  },
-    {
-    title: "Produtos",
-    items: [
-      {
-        name: "Produtos",
-        icon: FaBoxOpen,
-        subItems: [
-          { name: "Todos Produtos" },
-          { name: "Adicionar Produto" },
-          { name: "Categorias" },
-        ],
-      },
-    ],
-  },
-  {
-    title: "Apps & Pages",
-    items: [
-      { name: "Apps", icon: FaLayerGroup },
-      { name: "Widgets", icon: FaCube },
-    ],
-  },
-  {
-    title: "User Interface",
-    items: [
-      { name: "Features", icon: FaUserFriends },
-      { name: "Card", icon: FaLayerGroup },
-      { name: "Components", icon: FaCube },
-    ],
-  },
-];
-
-const Sidebar = ({ isOpen, setAuth }) => {
-  const [active, setActive] = useState("Dashboard");
-  const [expandedMenus, setExpandedMenus] = useState({});
+const Sidebar = ({ isOpen, profile }) => {
   const navigate = useNavigate();
+  const [openMenu, setOpenMenu] = useState(null);
 
   const handleLogout = () => {
-    // Aqui você pode limpar tokens ou estado de login
-    if (setAuth) setAuth(false); // exemplo: limpar estado de autenticação no App
-    navigate("/login"); // redireciona para login
+    localStorage.removeItem("user");
+    navigate("/login");
   };
 
-  const toggleSubmenu = (name) => {
-    setExpandedMenus((prev) => ({ ...prev, [name]: !prev[name] }));
-  };
-
-  const menuItemClass = (item) =>
-    `flex items-center gap-3 px-4 py-2 rounded-lg cursor-pointer transition ${
-      active === item
-        ? "bg-indigo-100 dark:bg-indigo-800 text-indigo-600 dark:text-indigo-200 font-semibold"
-        : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-    }`;
+  const menus = [
+    { title: "Dashboard", icon: <FaTachometerAlt />, path: "/admin" },
+    { title: "Estatísticas", icon: <FaChartLine />, submenus: ["Relatórios", "Análises", "Indicadores"] },
+    { title: "Vendas", icon: <FaShoppingCart />, submenus: ["Pedidos", "Clientes", "Transações"] },
+    { title: "Produtos", icon: <FaCube />, submenus: ["Lista de Produtos", "Categorias", "Estoque"] },
+    { title: "Projetos", icon: <FaLayerGroup />, submenus: ["Ativos", "Concluídos", "Planejados"] },
+    { title: "Documentos", icon: <FaFileAlt />, submenus: ["Notas", "Faturas", "Relatórios"] },
+    { title: "Usuários", icon: <FaUserFriends />, submenus: ["Lista de Usuários", "Funções", "Permissões"] },
+  ];
 
   return (
     <aside
-      className={`fixed top-16 left-0 h-full bg-white dark:bg-gray-900 shadow-md border-r border-gray-200 dark:border-gray-800 transition-all duration-300 overflow-y-auto ${
-        isOpen ? "w-64" : "w-20"
-      }`}
+      className={`fixed left-0 top-16 h-[calc(100vh-4rem)] bg-white border-r border-gray-200 shadow-sm p-4 overflow-y-auto transition-all duration-300
+        ${isOpen ? "w-64" : "w-20"}
+      `}
     >
-      <nav className="px-2 space-y-6">
-        {sections.map((section, idx) => (
-          <div key={idx}>
-            {isOpen && section.title && (
-              <p className="text-xs uppercase text-gray-500 dark:text-gray-400 mb-2 font-semibold">
-                {section.title}
-              </p>
-            )}
-            {section.items.map((item) => {
-              const Icon = item.icon;
-              const hasSubItems = item.subItems && item.subItems.length > 0;
-              const isExpanded = expandedMenus[item.name];
-
-              return (
-                <div key={item.name}>
-                  <div
-                    onClick={() => {
-                      if (hasSubItems) toggleSubmenu(item.name);
-                      else setActive(item.name);
-                    }}
-                    className={menuItemClass(item.name)}
-                  >
-                    {Icon && <Icon className="text-lg" />}
-                    {isOpen && <span className="flex-1">{item.name}</span>}
-                    {hasSubItems && isOpen && (
-                      <span>{isExpanded ? <FaChevronUp /> : <FaChevronDown />}</span>
-                    )}
-                  </div>
-
-                  {/* Submenus */}
-                  {hasSubItems && isExpanded && (
-                    <div className="ml-6 mt-1 space-y-1">
-                      {item.subItems.map((sub) => (
-                        <div
-                          key={sub.name}
-                          onClick={() => setActive(sub.name)}
-                          className={`flex items-center gap-2 px-4 py-1 rounded-lg cursor-pointer transition ${
-                            active === sub.name
-                              ? "bg-indigo-100 dark:bg-indigo-800 text-indigo-600 dark:text-indigo-200 font-semibold"
-                              : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                          }`}
-                        >
-                          {isOpen && <span>{sub.name}</span>}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        ))}
-
-        {/* Logout */}
-        <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
-          <div
-            onClick={handleLogout}
-            className="flex items-center gap-3 px-4 py-2 cursor-pointer text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition"
-          >
-            <FaSignOutAlt className="text-lg" />
-            {isOpen && <span>Logout</span>}
-          </div>
+      {/* Perfil */}
+      {isOpen && (
+        <div
+          className="flex flex-col items-center mb-6 cursor-pointer hover:opacity-80 transition"
+          onClick={() => navigate("/admin/perfil")}
+        >
+          <img src={profile.foto} alt="Avatar" className="w-16 h-16 rounded-full mb-2 border border-gray-300" />
+          <h2 className="text-gray-800 font-semibold">{profile.nome}</h2>
+          <p className="text-gray-500 text-sm">{profile.email}</p>
         </div>
+      )}
+
+      {/* Menu */}
+      <nav>
+        <ul className="space-y-1">
+          {menus.map((menu, i) => (
+            <li key={i}>
+              <button
+                onClick={() =>
+                  menu.submenus
+                    ? setOpenMenu(openMenu === i ? null : i)
+                    : navigate(menu.path)
+                }
+                className={`flex items-center justify-between w-full text-gray-700 hover:bg-gray-100 px-3 py-2 rounded-md transition ${
+                  openMenu === i ? "bg-gray-100" : ""
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-gray-600 text-lg">{menu.icon}</span>
+                  {isOpen && <span className="text-sm font-medium">{menu.title}</span>}
+                </div>
+                {menu.submenus && isOpen && (
+                  <FaChevronDown
+                    className={`text-xs transition-transform ${openMenu === i ? "rotate-180" : ""}`}
+                  />
+                )}
+              </button>
+
+              {/* Submenus */}
+              {menu.submenus && openMenu === i && isOpen && (
+                <ul className="ml-8 mt-1 space-y-1 border-l border-gray-200 pl-3">
+                  {menu.submenus.map((sub, idx) => (
+                    <li
+                      key={idx}
+                      className="text-gray-600 text-sm py-1.5 px-2 rounded hover:bg-gray-100 cursor-pointer transition"
+                    >
+                      {sub}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
       </nav>
+
+      {/* Logout */}
+      {isOpen && (
+        <button
+          onClick={handleLogout}
+          className="mt-8 flex items-center gap-3 text-red-600 font-medium hover:bg-red-50 w-full px-3 py-2 rounded-md transition"
+        >
+          <FaSignOutAlt />
+          Sair
+        </button>
+      )}
     </aside>
   );
 };

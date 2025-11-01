@@ -7,6 +7,8 @@ import LayoutBazar from "../Layouts/LayoutBazar";
 // Páginas públicas
 import Home from "../Pages/Home/Home";
 import Carrinho from "../Pages/Carrinho/Carrinho";
+import Login from "../Pages/Log/Login";
+import Register from "../Pages/Log/Register";
 import NotFound from "../Pages/NotFound/NotFound";
 
 // Painel administrativo (rotas internas)
@@ -19,6 +21,8 @@ const AppRoutes = () => {
       <Route element={<LayoutBazar />}>
         <Route path="/" element={<Home />} />
         <Route path="/carrinho" element={<Carrinho />} />
+         <Route path="/login" element={<Login />} />
+         <Route path="/register" element={<Register />} />
       </Route>
 
       {/* ROTAS ADMIN (SEM LAYOUT PÚBLICO) */}

@@ -5,12 +5,18 @@ import RevenueChart from './components/Charts/RevenueChart';
 import SalesOverview from './components/Widgets/SalesOverview';
 import TopProducts from './components/Widgets/TopProducts';
 import InvoiceList from './components/Widgets/InvoiceList';
-import { getUserCount, getProductCount, getSalesSummary, getTopProducts } from "../../services/api";
+
+import { 
+  getUserCount, 
+  getProductCount, 
+  getSalesSummary, 
+  getTopProducts 
+} from "../../services/dashboardService";
 
 const Dashboard = () => {
   const [stats, setStats] = useState([
-    { title: 'Sales Today', value: '0', icon: '🛒', color: 'green' },
-    { title: 'Visitors Today', value: '0', icon: '👥', color: 'orange' },
+    { title: 'Usuários', value: '0', icon: '👥', color: 'green' },
+    { title: 'Produtos', value: '0', icon: '📦', color: 'orange' },
     { title: 'Ganhos totais', value: '0', icon: '💳', color: 'red' },
     { title: 'Pedidos pendentes', value: '0', icon: '📝', color: 'light-green' },
   ]);
@@ -21,11 +27,15 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const usersRes = await getUserCount();
-        const productsRes = await getProductCount();
-        const salesRes = await getSalesSummary();
-        const topProductsRes = await getTopProducts();
+        // Faz as requisições em paralelo para performance
+        const [usersRes, productsRes, salesRes, topProductsRes] = await Promise.all([
+          getUserCount(),
+          getProductCount(),
+          getSalesSummary(),
+          getTopProducts(),
+        ]);
 
+        // Atualiza os cards principais
         setStats([
           { title: 'Usuários', value: usersRes.data.count, icon: '👥', color: 'green' },
           { title: 'Produtos', value: productsRes.data.count, icon: '📦', color: 'orange' },
@@ -33,8 +43,10 @@ const Dashboard = () => {
           { title: 'Pedidos pendentes', value: salesRes.data.totalOrders, icon: '📝', color: 'light-green' },
         ]);
 
+        // Atualiza gráficos e listas
         setSalesSummary(salesRes.data);
         setTopProducts(topProductsRes.data);
+
       } catch (err) {
         console.error("Erro ao carregar dados do dashboard:", err);
       }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../../services/api";
 import { useNavigate } from "react-router-dom";
 
 export default function Register() {
@@ -18,12 +18,10 @@ export default function Register() {
     }
 
     try {
+
+      // Faz a requisição usando a instância central
+      const res = await api.post("/auth/register", { email, password, role: "user" });
       // Enviando role como 'user' por padrão
-      const res = await axios.post("http://localhost:5000/api/auth/register", {
-        email,
-        password,
-        role: "user"
-      });
 
       setMsg(res.data.message);
       // Redireciona para login após registro
@@ -65,7 +63,7 @@ export default function Register() {
 
           <button
             type="submit"
-            className="bg-green-500 text-white py-2 rounded hover:bg-green-600 transition-colors"
+            className="bg-indigo-700  text-white py-2 rounded hover:bg-indigo-950 transition-colors"
           >
             Registrar
           </button>

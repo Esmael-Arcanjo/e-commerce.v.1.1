@@ -23,7 +23,7 @@ const data = [
 const OrderSummaryChart = () => {
   return (
     <div className="bg-white p-6 rounded-xl shadow">
-      <h2 className="text-lg font-semibold mb-4">Order Summary</h2>
+      <h2 className="text-lg font-semibold mb-4">Resumo do pedido</h2>
       <ResponsiveContainer width="100%" height={250}>
         <BarChart data={data}>
           <XAxis dataKey="month" />

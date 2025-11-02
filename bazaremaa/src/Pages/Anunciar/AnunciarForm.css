@@ -1,0 +1,81 @@
+.anunciar-container {
+  max-width: 1500px;
+  margin: 0px auto;
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.anunciar-container h2 {
+  text-align: center;
+  font-size: 26px;
+  margin-bottom: 25px;
+  color: #222;
+}
+
+.anunciar-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.linha {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.campo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+}
+
+.campo label {
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 6px;
+}
+
+.campo input {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: all 0.2s;
+}
+
+.campo input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+}
+
+.botao-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.botao-container button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 12px 25px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.botao-container button:hover {
+  background-color: #0056b3;
+}
+
+.mensagem {
+  text-align: center;
+  font-weight: 600;
+  color: #007bff;
+  margin-bottom: 15px;
+}

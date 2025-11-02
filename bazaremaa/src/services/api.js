@@ -1,22 +1,41 @@
 import axios from "axios";
 
-const API = axios.create({
-  baseURL: "http://localhost:5000/api", // Ajuste para a URL do seu backend
+// Criação da instância do Axios
+const api = axios.create({
+  baseURL: "http://localhost:5000/api", // URL do backend
+  timeout: 5000,                        // Timeout padrão
   headers: {
     "Content-Type": "application/json",
-    // Adicione token se necessário
-    // Authorization: `Bearer ${localStorage.getItem("token")}`,
   },
 });
 
-// Usuários
-export const getUserCount = () => API.get("/users/count");
+// Interceptor de requisição: exemplo para adicionar token
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("token"); // ou do context/auth
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
-// Produtos
-export const getProductCount = () => API.get("/products/count");
+// Interceptor de resposta: exemplo de tratamento de erro global
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response) {
+      // Aqui você pode tratar erros globalmente
+      console.error("Erro na API:", error.response.status, error.response.data);
+      if (error.response.status === 401) {
+        // logout ou redirecionamento para login
+      }
+    }
+    return Promise.reject(error);
+  }
+);
 
-// Vendas
-export const getSalesSummary = () => API.get("/sales/summary");
-
-// Top produtos
-export const getTopProducts = () => API.get("/sales/top-products");
+export default api;

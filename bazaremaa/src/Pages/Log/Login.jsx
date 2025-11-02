@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import api from "../../services/api"; // Instância centralizada
 
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
@@ -14,10 +14,9 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", {
-        email,
-        password,
-      });
+      // Faz a requisição usando a instância central
+      const res = await api.post("/auth/login", { email, password });
+
       localStorage.setItem("token", res.data.token);
       setMsg("Login realizado com sucesso!");
 
@@ -67,7 +66,7 @@ export default function Login() {
 
           <button
             type="submit"
-            className="bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition-colors"
+            className="bg-indigo-700  text-white py-2 rounded hover:bg-blue-600 transition-colors"
           >
             Entrar
           </button>

@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { FaTachometerAlt, FaChartLine, FaShoppingCart, FaLayerGroup, FaCube, FaFileAlt, FaUserFriends, FaSignOutAlt, FaChevronDown } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import AddProduct from "../../AddProduct"; // importando o formulário de adicionar produto
 
 const Sidebar = ({ isOpen, profile }) => {
   const navigate = useNavigate();
   const [openMenu, setOpenMenu] = useState(null);
+  const [showAddProduct, setShowAddProduct] = useState(false); // novo estado
 
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -15,11 +17,20 @@ const Sidebar = ({ isOpen, profile }) => {
     { title: "Dashboard", icon: <FaTachometerAlt />, path: "/admin" },
     { title: "Estatísticas", icon: <FaChartLine />, submenus: ["Relatórios", "Análises", "Indicadores"] },
     { title: "Vendas", icon: <FaShoppingCart />, submenus: ["Pedidos", "Clientes", "Transações"] },
-    { title: "Produtos", icon: <FaCube />, submenus: ["Lista de Produtos", "Categorias", "Estoque"] },
+    { title: "Produtos", icon: <FaCube />, submenus: ["Adicionar Produtos", "Categorias", "Estoque"] },
     { title: "Projetos", icon: <FaLayerGroup />, submenus: ["Ativos", "Concluídos", "Planejados"] },
     { title: "Documentos", icon: <FaFileAlt />, submenus: ["Notas", "Faturas", "Relatórios"] },
     { title: "Usuários", icon: <FaUserFriends />, submenus: ["Lista de Usuários", "Funções", "Permissões"] },
   ];
+
+  const handleSubmenuClick = (menuTitle, subTitle) => {
+  if (menuTitle === "Produtos" && subTitle === "Adicionar Produtos") {
+    navigate("/admin/add"); // navega para a página de adicionar produto
+  } else {
+    // outras ações ou navegações
+  }
+};
+
 
   return (
     <aside
@@ -72,6 +83,7 @@ const Sidebar = ({ isOpen, profile }) => {
                     <li
                       key={idx}
                       className="text-gray-600 text-sm py-1.5 px-2 rounded hover:bg-gray-100 cursor-pointer transition"
+                      onClick={() => handleSubmenuClick(menu.title, sub)}
                     >
                       {sub}
                     </li>
@@ -82,6 +94,9 @@ const Sidebar = ({ isOpen, profile }) => {
           ))}
         </ul>
       </nav>
+
+      {/* Renderiza o formulário de Adicionar Produto */}
+      {showAddProduct && <div className="mt-6"><AddProduct /></div>}
 
       {/* Logout */}
       {isOpen && (

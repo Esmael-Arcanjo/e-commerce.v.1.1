@@ -9,7 +9,7 @@ const invoices = [
 
 const InvoiceList = () => (
   <div className="bg-white p-6 rounded-xl shadow">
-    <h2 className="text-lg font-semibold mb-4">Invoice List</h2>
+    <h2 className="text-lg font-semibold mb-4">Lista de faturas</h2>
     <table className="w-full text-sm">
       <thead>
         <tr className="text-left text-gray-500 border-b">
